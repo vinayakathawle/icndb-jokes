@@ -6,6 +6,15 @@
 //  Copyright © 2018 Vinayak Kakade. All rights reserved.
 //
 
+let CELL_COUNT = 10
+let SECTION_COUNT = 1
+
+let COLLECTION_MARGIN = 26
+let ITEM_SPACING = 10
+let ITEM_HEIGHT = 375
+let ITEM_WIDTH = 0
+let ZERO_INT = 0
+
 let SERVICE_URL = "http://api.icndb.com/jokes/random?firstName=%@&lastName=%@"
 
 let FNAME_VALIDATOIN_MSG = "Please enter firstname."

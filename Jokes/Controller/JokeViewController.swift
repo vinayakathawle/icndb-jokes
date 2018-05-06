@@ -17,10 +17,10 @@ class JokeViewController: UIViewController, UICollectionViewDataSource, UICollec
     var lName : String?
     var viewModel: JokeViewModel = JokeViewModel()
     
-    let collectionMargin = CGFloat(26)
-    let itemSpacing = CGFloat(10)
-    let itemHeight = CGFloat(375)
-    var itemWidth = CGFloat(0)
+    let collectionMargin = CGFloat(COLLECTION_MARGIN)
+    let itemSpacing = CGFloat(ITEM_SPACING)
+    let itemHeight = CGFloat(ITEM_HEIGHT)
+    var itemWidth = CGFloat(ITEM_WIDTH)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +39,10 @@ class JokeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         itemWidth =  UIScreen.main.bounds.width - collectionMargin * 2.0
         
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(ZERO_INT), left: CGFloat(ZERO_INT), bottom: CGFloat(ZERO_INT), right: CGFloat(ZERO_INT))
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        layout.headerReferenceSize = CGSize(width: collectionMargin, height: 0)
-        layout.footerReferenceSize = CGSize(width: collectionMargin, height: 0)
+        layout.headerReferenceSize = CGSize(width: collectionMargin, height: CGFloat(ZERO_INT))
+        layout.footerReferenceSize = CGSize(width: collectionMargin, height: CGFloat(ZERO_INT))
         
         layout.minimumLineSpacing = itemSpacing
         layout.scrollDirection = .horizontal
@@ -59,7 +59,7 @@ class JokeViewController: UIViewController, UICollectionViewDataSource, UICollec
      */
     @IBAction func reloadNewsData(_ sender: Any) {
         self.pageControl.currentPage = 0;
-        self.collectionView .scrollToItem(at: IndexPath(row: 0, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+        self.collectionView .scrollToItem(at: IndexPath(row: ZERO_INT, section: ZERO_INT), at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
         
         // wait till collection view scroll to first view horizontally
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in

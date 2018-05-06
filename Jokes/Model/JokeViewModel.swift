@@ -11,50 +11,42 @@ import UIKit
 
 class JokeViewModel: NSObject,UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     
-    var items = ["", "", "", "", "", "", "", "", "", ""]
-    let collectionMargin = CGFloat(26)
-    let itemSpacing = CGFloat(10)
-    let itemHeight = CGFloat(375)
-    
-    var itemWidth = CGFloat(0)
-    var currentItem = 0
+    var items = [String]()
     
     /**
      Initialize the item array with null/blank value
      */
     func refreshData() {
-        self.items = ["", "", "", "", "", "", "", "", "", ""]
+        self.items = [String]()
     }
     
     /**
      Number of section to display on UICollectionView
      */
     func numberOfSectionsToDisplay() -> Int {
-        return 1
+        return SECTION_COUNT
     }
     
     /**
      Number of row in section to display on UICollectionView
      */
     func numberOfItemsToDisplay(_ section: Int) -> Int {
-        return 10
+        return CELL_COUNT
     }
     
     /**
      Set value on each row of UICollectionView
      */
     func collectionView(_ collectionView: UICollectionView, for indexPath: IndexPath, urlForService aURL:String) -> CustomCollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER,
-                                                      for: indexPath) as! CustomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: REUSE_IDENTIFIER, for: indexPath) as! CustomCollectionViewCell
         cell.numLabel.text = "\(indexPath.row + 1)" // display count number
         cell.titleLabel.text = ""
 
-        if self.items[indexPath.row].isEmpty { //fetch joke when Item array having blank value
+        if self.items.count <= indexPath.row {
             loadJoke(cell, cellForItemAt: indexPath, urlForService: aURL)
-        } else { // display value from item array
+        } else {
             cell.titleLabel.text = self.items[indexPath.row] ;
         }
-        
         return cell;
     }
 
@@ -72,7 +64,7 @@ class JokeViewModel: NSObject,UICollectionViewDelegateFlowLayout, UIScrollViewDe
             APIManager().getJoke(String(format: aURL), successClosure: { (response) in
                 if let response = response as? [String:AnyObject]{ // unwraping response to dictionary object
                     if let joke = response[VALUE_KEY]![JOKE_KEY] as? String { // unwrap joke string from response dictionary object
-                        self.items[indexPath.row] = joke // replace joke string to item array at specific index
+                        self.items.append(joke)
                         DispatchQueue.main.async { // UI update on main thread
                             cell.indicator.stopAnimating()
                             cell.titleLabel.text = joke;
